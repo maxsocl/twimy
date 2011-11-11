@@ -5,7 +5,7 @@ import tweepy
 import sys
 import ConfigParser
 
-def config():
+def auth():
     conf = {}
     config = ConfigParser.ConfigParser()
     config.read('conf.cfg')
@@ -15,18 +15,26 @@ def config():
     conf ['authKey'] = config.get('auth', 'authKey')
     conf ['authSecret'] = config.get('auth', 'authSecret')
 
-    return conf
+    consumer_token = conf['consumer_token']
+    consumer_secret = conf['consumer_secret']
 
-conf = config()
+    authKey = conf['authKey']
+    authSecret = conf['authSecret']
 
-consumer_token = conf['consumer_token']
-consumer_secret = conf['consumer_secret']
+    auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
+    auth.set_access_token(authKey, authSecret)
 
-authKey = conf['authKey']
-authSecret = conf['authSecret']
+    api = tweepy.API(auth)
 
-auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
-auth.set_access_token(authKey, authSecret)
+    return api
 
-api = tweepy.API(auth)
-api.update_status('Python test2.')
+def Tweet(twit):
+    if len(twit)<=140 and len(twit)>0:
+        api.update_status(twit)
+        return True
+    else:
+        return False
+
+api = auth()
+Tweet(sys.argv[1])
+
