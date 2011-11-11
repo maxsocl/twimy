@@ -35,6 +35,7 @@ def Tweet(twit):
     else:
         return False
 
-api = auth()
-Tweet(sys.argv[1])
+if __name__ == "__main__":
+    api = auth()
+    Tweet(sys.argv[1])
 
