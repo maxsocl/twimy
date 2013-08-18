@@ -29,7 +29,7 @@ def auth():
     return api
 
 def Tweet(twit):
-    if len(twit)<=140 and len(twit)>0:
+    if len(twit) in range(1, 141):
         api.update_status(twit)
         return True
     else:
