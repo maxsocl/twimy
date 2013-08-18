@@ -3,11 +3,11 @@
 
 import tweepy
 import sys
-import ConfigParser
+from ConfigParser import ConfigParser
 
 def auth():
     conf = {}
-    config = ConfigParser.ConfigParser()
+    config = ConfigParser()
     config.read('conf.cfg')
 
     conf ['consumer_token'] = config.get('consumer', 'consumer_token')
